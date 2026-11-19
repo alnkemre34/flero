@@ -1,0 +1,25 @@
+{
+  "name": "@flero/contracts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Zod source of truth for the HTTP (OpenAPI 3.1) and realtime (AsyncAPI 3.0) contracts (ADR-003).",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "generate": "node scripts/generate.ts",
+    "lint:contracts": "redocly lint generated/openapi.v1.json generated/asyncapi.v1.json",
+    "test": "vitest run && pnpm run lint:contracts",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@redocly/cli": "^2.78.0",
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "flero",
+  "private": true,
+  "packageManager": "pnpm@10.20.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "test:reference": "python -I -m unittest discover -s tools/shuffle-reference/tests -t tools/shuffle-reference",
+    "fixtures:shuffle": "python -I tools/shuffle-reference/gen_fixtures.py packages/shuffle-core/test/fixtures/allocator_reference.json"
+  }
+}

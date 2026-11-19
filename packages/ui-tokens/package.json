@@ -1,0 +1,20 @@
+{
+  "name": "@flero/ui-tokens",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Fener Isigi design tokens with measured WCAG contrast (doc 14).",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "report": "node scripts/report.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}

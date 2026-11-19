@@ -1,0 +1,20 @@
+PASS 1 quota tables (spec s2)
+PASS 2a allocator: determinism+asserts, allowlist N, A 0..12 :: 179172 cases
+PASS 2b dual-surplus branch unreachable :: dual=0
+PASS 2c q_L+q_R == min(Q, min(nL,BL)+min(nR,BR)) (no avoidable unfilled priority seat) :: violations=0 ex=[]
+PASS 2d Q=0 / Q=N math boundaries incl. local 0/10000, N=1..10 :: 182680 cases, dual=0
+PASS 3a identity-symmetry of enumeration (A<=5, all boost-set identities)
+PASS 3/4 BOOST_NON_HARM (own toggle, LOCAL & REMOTE, exact enumeration) :: 9216 (N,ratio,A_L,A_R) configs, 478872 toggles (88076 with q change), violations=0
+PASS 3c closed-form s3.5 agrees with enumeration (sanity only) :: mismatches=0
+INFO other-stratum non-target boost: 782784 cases, target prob DECREASED in 15593; worst=(2, 3000, 5000, 1, 8, 0, 1, 'R', True, '1', '1/8') delta=-7/8
+INFO same-stratum non-target boost: 760032 cases, target prob DECREASED in 172148; worst=(2, 3000, 5000, 1, 2, 0, 0, 'R', False, '1/2', '0') delta=-1/2
+PASS 6b A_total==N in NORMAL: every target p=1 (enumeration) :: 48024 targets
+PASS 5 CITY mode non-harm (q=min(Q,B,n)) :: 3222 toggles; first violation=[]
+PASS 6a SPARSE_COMPLETE: all included once, Boost->Plus->Standard, A_total<N for all N :: 155 cases
+PASS case47 NORMAL paid seats <= Q across 500..4000 bps (step 100) :: 9229248 cases
+
+SUMMARY: {'1 quota tables (spec s2)': True, '2a allocator: determinism+asserts, allowlist N, A 0..12': True, '2b dual-surplus branch unreachable': True, '2c q_L+q_R == min(Q, min(nL,BL)+min(nR,BR)) (no avoidable unfilled priority seat)': True, '2d Q=0 / Q=N math boundaries incl. local 0/10000, N=1..10': True, '3a identity-symmetry of enumeration (A<=5, all boost-set identities)': True, '3/4 BOOST_NON_HARM (own toggle, LOCAL & REMOTE, exact enumeration)': True, '3c closed-form s3.5 agrees with enumeration (sanity only)': True, '6b A_total==N in NORMAL: every target p=1 (enumeration)': True, '5 CITY mode non-harm (q=min(Q,B,n))': True, '6a SPARSE_COMPLETE: all included once, Boost->Plus->Standard, A_total<N for all N': True, 'case47 NORMAL paid seats <= Q across 500..4000 bps (step 100)': True}
+
+real	0m21.893s
+user	0m0.031s
+sys	0m0.000s

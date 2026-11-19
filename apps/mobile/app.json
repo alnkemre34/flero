@@ -1,0 +1,63 @@
+{
+  "expo": {
+    "name": "FLERO",
+    "slug": "flero",
+    "scheme": "flero",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/brand/generated/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "app.flero.dev"
+    },
+    "android": {
+      "package": "app.flero.dev",
+      "adaptiveIcon": {
+        "backgroundColor": "#0A0A0F",
+        "foregroundImage": "./assets/brand/generated/android-icon-foreground.png",
+        "monochromeImage": "./assets/brand/generated/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/brand/generated/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "./plugins/withLocalCmake",
+      "expo-secure-store",
+      [
+        "expo-sqlite",
+        {
+          "useSQLCipher": true
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/brand/generated/splash-icon.png",
+          "imageWidth": 120,
+          "resizeMode": "contain",
+          "backgroundColor": "#F7F7F5",
+          "dark": {
+            "image": "./assets/brand/generated/splash-icon.png",
+            "backgroundColor": "#0A0A0F"
+          }
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/brand/generated/notification-icon.png",
+          "color": "#D4FF3A",
+          "defaultChannel": "default"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

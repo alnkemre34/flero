@@ -1,0 +1,9 @@
+{
+  "brand": "#D4FF3A",
+  "onBrand": "#0A0A0F",
+  "iconBackground": "#0A0A0F",
+  "splashBackgroundLight": "#F7F7F5",
+  "splashBackgroundDark": "#0A0A0F",
+  "androidIconBackground": "#0A0A0F",
+  "notificationColor": "#D4FF3A"
+}

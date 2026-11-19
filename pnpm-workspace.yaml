@@ -1,0 +1,9 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# React Native builds native code (CMake/Gradle) inside each package folder. A shared global virtual
+# store linked through junctions makes CMake regenerate forever on Windows, so packages are installed
+# as real folders in the workspace (the standard setup for React Native monorepos).
+nodeLinker: hoisted
+enableGlobalVirtualStore: false

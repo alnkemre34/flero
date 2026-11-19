@@ -1,0 +1,69 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mobile-web",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--dir",
+        "apps/mobile",
+        "exec",
+        "expo",
+        "start",
+        "--web",
+        "--port",
+        "8081",
+        "--clear"
+      ],
+      "port": 8081,
+      "env": {
+        "BROWSER": "none",
+        "EXPO_NO_TELEMETRY": "1"
+      }
+    },
+    {
+      "name": "api",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "apps/api/src/index.ts"
+      ],
+      "port": 3000,
+      "env": {
+        "DATABASE_URL": "postgres://flero:flero@127.0.0.1:5433/flero",
+        "NODE_ENV": "development",
+        "CORS_ORIGINS": "http://localhost:8081"
+      }
+    },
+    {
+      "name": "admin-api",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "apps/api/src/admin/index.ts"
+      ],
+      "port": 8181,
+      "env": {
+        "DATABASE_URL": "postgres://flero:flero@127.0.0.1:5433/flero",
+        "NODE_ENV": "development",
+        "ADMIN_PORT": "8181"
+      }
+    },
+    {
+      "name": "admin-web",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--dir",
+        "apps/admin",
+        "exec",
+        "next",
+        "dev",
+        "--port",
+        "3100"
+      ],
+      "port": 3100,
+      "env": {
+        "ADMIN_API_URL": "http://127.0.0.1:8181",
+        "NEXT_TELEMETRY_DISABLED": "1"
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@flero/shuffle-core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Pure Shuffle V5.2 allocation, ordering and config validation (no I/O).",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "fixtures": "python -I ../../tools/shuffle-reference/gen_fixtures.py test/fixtures/allocator_reference.json",
+    "test": "pnpm run fixtures && vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "fast-check": "^4.10.2",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}

@@ -1,0 +1,51 @@
+# FLERO — Current State (2026-11-14)
+
+- **Phase:** architecture approved 2026-11-14. **2026-11-15: engine + admin + mobile wiring built ("everything except integrations").** Details and open items: `TASKS.md` → Status.
+- **Running locally:**
+  - `docker container flero-dev-pg` (5433), seed with `node apps/api/src/dev/seed.ts`
+  - `.claude/launch.json`: `api` :3000 (includes realtime in dev), `admin-api` :8181, `admin-web` :3100, `mobile-web` :8081
+- **Engine:** `apps/api`, one codebase with three processes: app API, realtime gateway, admin API
+  - migrations 0001–0008
+  - 283 tests on real PG17
+  - p95 latencies are recorded in `docs/architecture/evidence/engine_bench_2026-11-15.md`.
+  - Done: git repo (`main`, nothing committed yet: no git identity configured); pnpm workspace skeleton; `tools/shuffle-reference` (Python, 12 tests); `packages/shuffle-core` (TS allocator, config bounds, presentation/sparse/UNCERTAIN-cap; 35 tests incl. a 173,532-row cross-check against the Python reference, mutation-checked).
+  - Done (slice 2): UNCERTAIN fallback enumerator: "demote" passes; "drop" counterexample recorded in doc 11 §8. `packages/conversation-model` (M1.6): 10 tests including differential oracle suites, mutation-checked.
+  - Done (slice 3): `packages/db`: migration v0 (`app`/`ident`/`admin_v`, roles, constraints) + runner + 34 tests on real PG17 (Testcontainers; Docker Desktop must be running), mutation-checked.
+  - Done (slice 4): `packages/contracts` v0: Zod → OpenAPI 3.1 (19 ops) + AsyncAPI 3.0, Redocly-clean, 32 tests (forbidden fields, drift, Shuffle semantics), mutation-checked. The `COVERAGE_TODO` list is the remaining API surface.
+  - Done (slice 5): `packages/ui-tokens` (M1.2): tokens + measured WCAG contrast, 54 pairs, 0 failures, 62 tests; report in `docs/architecture/evidence/contrast_report.md`; `.project-memory/DESIGN_SYSTEM.md` written. Workspace total: 187 tests. The DB suite needs Docker Desktop running (it stops between sessions).
+  - Done (slice 6): M1.8 re-review → fixes. Chargeback postings corrected (doc 12). Migration `0002_rereview_fixes` (gift transit + `ident.gift_link`, alias key in `admin_secret`, `shield_retained`, drop `follow.frozen`, sensitive audit table, push_attempt, grant tightening). Model keeps the shield under a FULL block. Recorded in doc 21. Workspace: 194 tests passing.
+  - Done (slice 7): DEC-02b delayed closure in the model + inbox differential test (mutation-checked). M1.1 screen inventory + navigation graph: `docs/design/SCREEN_INVENTORY.md` (39 screens, variants, states, acceptance template). Workspace: 195 tests.
+  - Open from re-review: priority-stage truncation in the fallback model; `admin_ops` isolation test (M7); backend replay of model sequences (M3.3).
+  - Done (slice 8): `apps/mobile` Expo SDK 58 shell:
+    - Expo Router with 5 tabs; Manrope/Fraunces fonts; theme from `ui-tokens`
+    - Keşfet prototype: FlashList, 4 card variants, fixture validated by the contract schema, states for loading / empty / UNCERTAIN
+    - glyph-test screen
+    - checks: typecheck clean, expo-doctor 20/20, web render checked in the browser pane (light + dark), no console errors
+    - `.claude/launch.json` → `mobile-web` (port 8081)
+    - template `LICENSE` and `.claude/settings.json` (enabled an `expo` plugin) removed
+  - Done (slice 9): public v1 contracts complete: 79 operations, 60 contract tests, Redocly-clean. Priority-stage truncation is modeled and non-harm holds (Python, 15 tests). `apps/mobile/src/app/perf-list.tsx` (500 cards) + `tools/perf/android-scroll-gate.mjs` (adb + gfxinfo).
+  - Build environment notes: system JAVA_HOME is stale (points to a removed JDK 17.0.18). Avast HTTPS scanning breaks Java TLS, so builds run with `JAVA_HOME=…jdk-17.0.21.9-hotspot` and `JAVA_TOOL_OPTIONS=-Djavax.net.ssl.trustStoreType=Windows-ROOT` (per command, no system change).
+  - Done (slice 10): **design v2 "FLERO Gece"** (owner rejected v1).
+    - Rebuilt tokens; 70 token tests, 62×2 contrast pairs.
+    - Reanimated motion; new screens: Keşfet, Profil, Sohbetler, Sohbet.
+    - Verified on web, light and dark. Details in DESIGN_SYSTEM.md.
+  - Android build status:
+    - Native compile works with `nodeLinker: hoisted` (pnpm-workspace.yaml), the JAVA_HOME / Windows-ROOT trust overrides, and `metro.config.js`.
+    - Blocked on Windows MAX_PATH in the Reanimated C++ build. A `subst` drive was tried and abandoned: mixed-drive roots break codegen, and a shared Metro cache broke web fonts.
+    - Needs the owner either to enable Windows long paths (admin) or to log in to EAS for cloud builds.
+    - **Resolved 2026-11-14:** the owner enabled long paths. With CMake 3.31.6 + direct Gradle, the **release APK builds and runs on the emulator** (recipe: `docs/runbooks/android-local-build-windows.md`).
+    - Emulator perf run is NOT VALID evidence: p50 18 ms, 91 % of frames > 16.7 ms on an emulated 1440×3120 display with GPU translation.
+    - The real gate still needs a physical midrange phone. Card cost (several LinearGradients per card) is the first optimization suspect if the device also misses the bar.
+  - Done (slice 11): Gece design extended to Cüzdan, Plus paywall (`/plus`, modal), Boost checkout (`/boost`, modal, disclosure-gated CTA, CITY locked for Standard) and Bildirimler. Verified on web (dark); 217 workspace tests green.
+  - Done (slice 12):
+    - Profilim: own profile, owner-only friend count, settings rows.
+    - Reusable `design/Sheet.tsx`: drawer curve, drag-to-dismiss by distance or velocity, rubber band, Reduced Motion = fade.
+    - Unlock / Gift / Filter sheets wired into the chat and Keşfet; verified on web.
+    - `react-native-worklets` is now a direct dependency.
+  - M1 remaining: on-device frame-time gate (midrange Android; needs a dev build) and iOS/Android screenshots; M1.3 prototypes (need the Expo app + a midrange Android device for the frame-time gate); Turkish glyph render test; M1.8 security sign-off + re-review of the review fixes; priority-stage truncation in the fallback model; contracts for the `COVERAGE_TODO` resources.
+- **Authoritative docs:** `docs/architecture/00–21` (00 = summary plus the decision list DEC-01…25). Spec: `FLERO_MASTER_SPEC.md` (Appendix A Shuffle V5.2 LOCKED).
+- **Proposed stack:** Expo/React Native · TS/Fastify modular monolith (api, realtime, worker, admin-api) · PostgreSQL 17 · Valkey (ephemeral only) · S3/CloudFront · direct APNs/FCM · direct StoreKit 2/Play Billing · Next.js admin · AWS Frankfurt/ECS Fargate/OpenTofu.
+- **Evidence:** Shuffle exact-enumeration spike passes (`docs/architecture/evidence/`).
+- **Independent review:** APPROVE-WITH-FIXES. Fixes applied; re-review pending (M1.8).
+- **Blocking decisions DEC-01, 02, 03, 06, 07, 12, 14, 17:** approved as recommended. **Open:** DEC-04, 05, 08–11, 13, 15, 16, 18–25 (due per doc 00 §7). Legal review of Apple 1.2 positioning (RISK-01) and transferable Gold (DEC-08) should start in parallel with M1.
+- **Design direction:** "FLERO Gece" (see DESIGN_SYSTEM.md); the admin panel uses the same tokens in a dense layout.

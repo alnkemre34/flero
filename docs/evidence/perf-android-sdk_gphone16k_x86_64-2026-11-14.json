@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-14T14:22:52.656Z",
+  "device": "sdk_gphone16k_x86_64",
+  "emulator": true,
+  "refreshHz": "?",
+  "package": "app.flero.dev",
+  "swipes": 30,
+  "totalFrames": 937,
+  "jankyFramesAndroid": 40,
+  "framesOver16_7ms": 851,
+  "shareOver16_7ms": 90.82,
+  "p50": 18,
+  "p90": 27,
+  "p95": 32,
+  "p99": 40,
+  "gate": "NOT VALID (emulator)"
+}

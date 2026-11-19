@@ -1,0 +1,38 @@
+{
+  "name": "@flero/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@fastify/multipart": "10.1.8",
+    "@flero/contracts": "workspace:*",
+    "@flero/db": "workspace:*",
+    "@flero/shuffle-core": "workspace:*",
+    "@node-rs/argon2": "^2.2.2",
+    "fastify": "^5.12.8",
+    "fastify-type-provider-zod": "^7.0.0",
+    "jose": "^6.2.17",
+    "pg": "^8.23.1",
+    "sharp": "0.35.5",
+    "ws": "8.23.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@testcontainers/postgresql": "^12.2.1",
+    "@types/node": "^26.6.6",
+    "@types/pg": "^8.23.1",
+    "@types/ws": "8.18.2",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  },
+  "scripts": {
+    "start": "node src/index.ts",
+    "dev": "node --watch src/index.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "start:realtime": "node src/realtime/index.ts",
+    "start:admin": "node src/admin/index.ts",
+    "create-staff": "node src/admin/create-staff.ts",
+    "bench": "node bench/engine.bench.ts"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "@flero/conversation-model",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Executable reference model of conversations, reveal and anonymity rules (doc 08/10).",
+  "exports": {
+    ".": "./src/model.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "fast-check": "^4.10.2",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}
